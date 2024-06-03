@@ -35,7 +35,9 @@ while(option != 0)
             operarLista.MoverTareasTerminadas(listas.TareasPendientes, listas.TareasRealizadas);
             break;
         case 3:
-            // operarLista.BuscarTarea(listas.TareasPendientes);
+            System.Console.WriteLine("Ingrese descripcion para buscar tareas: ");
+            string?  buscado = Console.ReadLine();
+            operarLista.BuscarTareaSegunDescripcion(buscado,listas.TareasPendientes);
             break;
         case 0:
             Console.ForegroundColor=ConsoleColor.DarkMagenta;  

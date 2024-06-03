@@ -26,7 +26,7 @@ namespace espacioTareas
             this.Duracion = duracion;
             this.estado = estado;
         }
-        public Tarea(){}
+        public Tarea() { }
 
         //metodos
     }
@@ -34,7 +34,7 @@ namespace espacioTareas
     // public class GenerarTareasPendientes()
     // {
 
-       
+
     // }
 
     public class Listas
@@ -49,7 +49,7 @@ namespace espacioTareas
     public class OperacionesTareas()
     {
         public List<Tarea> GenerarListaTareasPendientes(List<Tarea> listaTareasPendientes)
-        {   
+        {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             System.Console.WriteLine();
             System.Console.WriteLine("generando aleatoriamente tareas pendientes...");
@@ -57,9 +57,14 @@ namespace espacioTareas
             // int.TryParse(Console.ReadLine(), out int cantidadTareasAGenerar);
             Random cantidadTareasAGenerar = new Random();
             Random random = new Random();
-            for(int i = 0; i<cantidadTareasAGenerar.Next(2,10); i++)
+            for (int i = 0; i < cantidadTareasAGenerar.Next(2, 10); i++)
             {
-                Tarea tarea = new Tarea(i, "hola", random.Next(10,100), Estado.PENDIENTE);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                System.Console.WriteLine($"Ingrese la descripcion de la tarea {i+1}");
+                string? descripcion = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Tarea tarea = new Tarea(i, descripcion, random.Next(10, 100), Estado.PENDIENTE);
                 listaTareasPendientes.Add(tarea);
             }
             return listaTareasPendientes;
@@ -69,8 +74,8 @@ namespace espacioTareas
             System.Console.WriteLine("-----------LISTA-----------");
             System.Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            int i=0;
-            foreach(var tarea in lista)
+            int i = 0;
+            foreach (var tarea in lista)
             {
                 MostrarTarea(i, tarea);
                 i++;
@@ -90,19 +95,19 @@ namespace espacioTareas
             System.Console.WriteLine();
         }
 
-        public void MoverTareasTerminadas(List<Tarea>listaPendientes,List<Tarea>listaRealizadas)
+        public void MoverTareasTerminadas(List<Tarea> listaPendientes, List<Tarea> listaRealizadas)
         {
             System.Console.WriteLine("Ingrese ID de la tarea realizada para mover a terminadas: ");
             int salir = 0;
             int indice = 0;
             int bandera = 0;
-            while(salir == 0)
+            while (salir == 0)
             {
-                if(int.TryParse(Console.ReadLine(), out int idTareaRealizada))
+                if (int.TryParse(Console.ReadLine(), out int idTareaRealizada))
                 {
-                    foreach(var tarea in listaPendientes)
+                    foreach (var tarea in listaPendientes)
                     {
-                        if(tarea.Id == idTareaRealizada)
+                        if (tarea.Id == idTareaRealizada)
                         {
                             // listaPendientes.Remove(tarea);//no remover aqui porque da error tengo que guardar la tarea y despues remover
                             bandera = 1;
@@ -110,34 +115,36 @@ namespace espacioTareas
                         }
                         indice++;
                     }
-                    if(bandera == 1)
+                    if (bandera == 1)
                     {
                         salir = 1;
                         listaPendientes[indice].Estado = Estado.TERMINADA;
                         listaRealizadas.Add(listaPendientes[indice]);
                         listaPendientes.Remove(listaPendientes[indice]);
-                        Console.ForegroundColor=ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         System.Console.WriteLine();
                         System.Console.WriteLine("Tarea trasladada con exito!");
-                        Console.ForegroundColor=ConsoleColor.White;
-                    }else
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
                     {
-                        Console.ForegroundColor=ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         System.Console.WriteLine("NO SE ENCONTRÓ NINGUNA TAREA CON LA ID INGRESADA");
-                        Console.ForegroundColor=ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         System.Console.WriteLine("DESEA SEGUIR INTENTANDO? (si [0], no [1]):");
-                        Console.ForegroundColor=ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.White;
                         int.TryParse(Console.ReadLine(), out salir);
                     }
-                    
-                }else
+
+                }
+                else
                 {
-                    Console.ForegroundColor=ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     System.Console.WriteLine("ERROR INGRESE UNA ID VALIDA");
                     System.Console.WriteLine();
-                    Console.ForegroundColor=ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     System.Console.WriteLine("DESEA SEGUIR INTENTANDO? (si [0], no [1]):");
-                    Console.ForegroundColor=ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.White;
                     int.TryParse(Console.ReadLine(), out salir);
                 }
             }
@@ -145,11 +152,23 @@ namespace espacioTareas
 
         }
 
-        public void BuscarTareaSegunDescripcion(String buscado, List<Tarea> TareasPendientess)
+        public void BuscarTareaSegunDescripcion(String buscado, List<Tarea> TareasPendientes)
         {
-            
+            int indice = 0;
+            Console.ForegroundColor = ConsoleColor.Blue;
+            System.Console.WriteLine($"Las tareas que coinciden con: {buscado}");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            foreach (var tarea in TareasPendientes)
+            {
+                if (tarea.Descripcion.Contains(buscado))
+                {
+                    MostrarTarea(indice, tarea);
+                }
+                indice++;
+            }
+
         }
 
     }
-
 }
