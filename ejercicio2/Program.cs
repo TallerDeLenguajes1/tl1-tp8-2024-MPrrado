@@ -1,14 +1,15 @@
-﻿
-﻿
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using EspacioCalculadora; //necesitamos esto para traer el espacio de nombres (el entorno) de nuestra clase para poder acceder
 Calculadora instanciaCalculadora = new Calculadora();
+EjecutarOperacionCalculadora operar = new EjecutarOperacionCalculadora();
+List<Operacion> historial = new List<Operacion>();
 
 // static bool 
 
 bool salir = true;
 while(salir)
 {
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine("--------MENU CALCUADORA V2.0.0-------");
     Console.WriteLine("1- SUMAR");
     Console.WriteLine("2- RESTAR");
@@ -20,13 +21,14 @@ while(salir)
     Console.WriteLine("Ingrese una opcion: ");
     if (int.TryParse(Console.ReadLine(), out int opcion))
     {
-        if (opcion > 5 || opcion < 0)
+        if (opcion > 6 || opcion < 0)
         {
             Console.WriteLine("ERROR LA OPCION INGRESADA NO ES VALIDA");
         }
         else
         {
-            salir = operacionCalculadora(instanciaCalculadora,salir, opcion);
+            Console.ForegroundColor = ConsoleColor.White;
+            salir = operar.operacionCalculadora(instanciaCalculadora, salir, opcion, historial);
         }
     }
 }
